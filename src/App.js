@@ -1,5 +1,10 @@
+// import { useEffect } from "react"
+// import axios from "axios"
+import IndexRouter from "./router/IndexRouter"
+import "./App.css"
+
 function App() {
-  return <div>app</div>;
+  return <IndexRouter></IndexRouter>
 }
 
-export default App;
+export default App
