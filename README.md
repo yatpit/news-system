@@ -123,7 +123,7 @@ useEffect
 
 场景一：
 
-输入http://localhost:3000/后会重定向到http://localhost:3000/#/home，重定向后Sider的Menu会更新一次，加了`defaultSelectedKeys`和`defaultOpenKeys`的Menu是非受控组件，只在初次展示时有用
+输入 http://localhost:3000/ 后会重定向到 http://localhost:3000/#/home ，重定向后Sider的Menu会更新一次，加了`defaultSelectedKeys`和`defaultOpenKeys`的Menu是非受控组件，只在初次展示时有用
 
 
 
