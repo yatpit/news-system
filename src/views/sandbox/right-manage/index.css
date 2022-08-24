@@ -1,4 +1,4 @@
-.ant-layout-content {
+/* .ant-layout-content {
   display: flex;
   height: 100%;
   flex-direction: column;
@@ -7,4 +7,8 @@
 .ant-table-wrapper {
   flex: 1;
   overflow: auto;
+} */
+
+.operateBtn button:first-child {
+  margin-right: 5px;
 }

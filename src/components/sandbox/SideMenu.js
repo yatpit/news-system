@@ -92,8 +92,7 @@ function SideMenu() {
   return (
     <Sider trigger={null} collapsible>
       <div className="logo">新闻发布系统</div>
-      {/* 侧边菜单栏加flex布局 */}
-      <div style={{ flex: 1, overflow: "auto" }}>
+      <div>
         <Menu
           theme="dark"
           mode="inline"
