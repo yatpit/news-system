@@ -27,6 +27,9 @@ function RightList() {
     {
       title: "ID",
       dataIndex: "id",
+      render: (id) => {
+        return <b>{id}</b >
+      }
     },
     {
       title: "权限名称",
@@ -84,7 +87,7 @@ function RightList() {
       // icon: <ExclamationCircleOutlined />,
       content: "您确定删除吗？",
       onOk() {
-        delMothod(item)
+        delMethod(item)
       },
       onCancel() {
         console.log("Cancel")
@@ -92,7 +95,7 @@ function RightList() {
     })
   }
 
-  const delMothod = (item) => {
+  const delMethod = (item) => {
     // 当前页面同步状态+后端同步
     // 如果删除的时二级菜单，先找到其对应的一级菜单，再删除对应的children节点
     if (item.grade === 2) {
@@ -109,7 +112,7 @@ function RightList() {
   }
 
   const handleSwitch = (item) => {
-    // console.log(item)
+    console.log(item)
     item.pagepermisson = item.pagepermisson === 1 ? 0 : 1
     // 此时right中的pagepermisson值已经改变，属于歪门邪道
     setRight([...right])
@@ -129,7 +132,7 @@ function RightList() {
       <Table
         columns={columns}
         dataSource={right}
-        // pagination={{ pageSize: 5 }}
+      // pagination={{ pageSize: 5 }}
       />
     </Fragment>
   )

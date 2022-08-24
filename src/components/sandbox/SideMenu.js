@@ -47,7 +47,7 @@ function SideMenu() {
 
   // 过滤权限数组中带有pagepermisson属性的对象，包括children中的嵌套对象
   const checkPagePermission = (resData) => {
-    const item = resData.map((item) => {
+    const data1 = resData.map((item) => {
       // 如果children为空，则删除children这个属性
       if (item.children.length === 0) {
         delete item.children
@@ -59,7 +59,12 @@ function SideMenu() {
       })
       return { ...item, children: newChildren }
     })
-    return JSON.parse(JSON.stringify(item, ["label", "key", "children"]))
+    // 过滤pagepermisson为0的一级菜单
+    const data2 = data1.filter((item) => {
+      return item.pagepermisson === 1
+    })
+    // console.log(data2)
+    return JSON.parse(JSON.stringify(data2, ["label", "key", "children"]))
     // 只取label,key,children属性
   }
 
