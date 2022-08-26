@@ -8,6 +8,7 @@ const { confirm } = Modal
 
 function RightList() {
   const [right, setRight] = useState([])
+  const [refresh, setRefresh] = useState([false])  // 用户操作后刷新
 
   useEffect(() => {
     axios.get("http://localhost:5000/rights?_embed=children").then((res) => {
@@ -21,7 +22,7 @@ function RightList() {
       })
       setRight(rigthData)
     })
-  }, [])
+  }, [refresh])
 
   const columns = [
     {
@@ -105,9 +106,11 @@ function RightList() {
       // 发生改变，直接复制一份right，即可更新
       setRight([...right])
       // axios.delete(`http://localhost:5000/children/${item.id}`)
+      //   .then(setRefresh)
     } else {
       setRight(right.filter((data) => data.id !== item.id))
       // axios.delete(`http://localhost:5000/rights/${item.id}`)
+      //   .then(setRefresh)
     }
   }
 
@@ -119,11 +122,11 @@ function RightList() {
     if (item.grade === 1) {
       axios.patch(`http://localhost:5000/rights/${item.id}`, {
         pagepermisson: item.pagepermisson,
-      })
+      }).then(setRefresh)
     } else {
       axios.patch(`http://localhost:5000/children/${item.id}`, {
         pagepermisson: item.pagepermisson,
-      })
+      }).then(setRefresh)
     }
   }
 

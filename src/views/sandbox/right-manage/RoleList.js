@@ -10,6 +10,9 @@ function RoleList() {
   const [role, setRole] = useState([])
   const [isModalVisible, setIsModalVisible] = useState(false)
   const [right, setRight] = useState([])
+  const [currentId, setCurrentId] = useState([])
+  const [currentRight, setCurrentRight] = useState([])
+  const [refresh, setRefresh] = useState([false])
 
   useEffect(() => {
     axios.get('http://localhost:5000/roles').then((res) => {
@@ -23,7 +26,7 @@ function RoleList() {
       // console.log(treeData)
       setRight(treeData)
     })
-  }, [])
+  }, [refresh])
 
   const columns = [
     {
@@ -49,7 +52,12 @@ function RoleList() {
               type="primary"
               shape="circle"
               icon={<EditOutlined />}
-              onClick={() => setIsModalVisible(true)}
+              onClick={() => {
+                setIsModalVisible(true)
+                setCurrentRight(item.rights)
+                setCurrentId(item.id)
+                // console.log(item.rights)
+              }}
             // disabled={item.pagepermisson === undefined}
             />
             <Button
@@ -86,14 +94,34 @@ function RoleList() {
   }
 
   const handleOk = () => {
-    setIsModalVisible(false);
+    setIsModalVisible(false)
+    // 将更改的选项框同步到role中
+    setRole(role.map(item => {
+      if (item.id === currentId) {
+        return {
+          ...item,
+          right: currentRight
+        }
+      }
+      return item  // 赋值给了role
+    }))
+    // 更新服务器数据
+    // 如果写了setRefresh，会重新获取服务器数据，就不需要上面的手动setRole了
+    axios.patch(`http://localhost:5000/roles/${currentId}`, {
+      rights: currentRight
+      // })
+    }).then(setRefresh)
   }
 
   const handleCancel = () => {
     setIsModalVisible(false);
   }
 
+  const handleCheck = (checkedKeys) => {
+    setCurrentRight(checkedKeys.checked)
 
+    // console.log(checkedKeys.checked)
+  };
 
   return (
     <Fragment>
@@ -110,7 +138,10 @@ function RoleList() {
       >
         <Tree
           checkable
+          checkStrictly
           treeData={right}
+          checkedKeys={currentRight}
+          onCheck={handleCheck}
         />
       </Modal>
     </Fragment>
